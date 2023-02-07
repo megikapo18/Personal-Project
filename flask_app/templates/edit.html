@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='styleEditJob.css') }}">
+</head>
+<body>
+    <div class="background">
+        <div class="shape"></div>
+        <div class="shape"></div>
+    </div>
+    <form action="/update/{{job.id}}" method="post">
+        <input type="hidden" name="user_id" value="{{loginUser.id}}">
+        <input type="hidden" name="job_id" value="{{job.id}}">
+
+        <label for="title">Title</label>
+        <input type="name" value="{{job.title}}" name="title">
+        <div>
+            {% with messages = get_flashed_messages(category_filter=["title"]) %}
+                {% if messages %}
+                    {% for message in messages %}
+                        <p class="text-danger">{{message}}</p>
+                    {% endfor %}
+                {% endif %}
+            {% endwith %}
+        </div>
+        <label for="description">Description</label>
+        <textarea name="description" cols="30" rows="3">{{job.description}}</textarea>
+        <div>
+            {% with messages = get_flashed_messages(category_filter=["description"]) %}
+                {% if messages %}
+                    {% for message in messages %}
+                        <p class="text-danger">{{message}}</p>
+                    {% endfor %}
+                {% endif %}
+            {% endwith %}
+            </div>
+        <label for="location">Location</label>
+        <textarea name="location" cols="30" rows="3">{{job.location}}</textarea>
+        <div>
+            {% with messages = get_flashed_messages(category_filter=["location"]) %}
+                {% if messages %}
+                    {% for message in messages %}
+                        <p class="text-danger">{{message}}</p>
+                    {% endfor %}
+                {% endif %}
+            {% endwith %}
+        </div>
+        <button>Update</button>
+        <div id="link">
+        <a href="/">Back</a>
+        </div>
+    </form>
+</body>
+</html>

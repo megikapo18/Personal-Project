@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+<head>
+    <meta charset="utf-8">
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='style.css') }}">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+</head>
+<body>
+    <div class="wrapper">
+        <div class="title-text">
+            <div class="title login">
+                Login 
+            </div>
+            <div class="title signup">
+                Register
+            </div>
+        </div>
+        <div class="form-container">
+            <div class="slide-controls">
+                <input type="radio" name="slide" id="login" checked>
+                <input type="radio" name="slide" id="signup">
+                <label for="login" class="slide login">Login</label>
+                <label for="signup" class="slide signup">Register</label>
+                <div class="slider-tab"></div>
+            </div>
+            <div class="form-inner">
+                <form action="/login" method="post" class="login">
+                    <div class="field">
+                        <label for="emailLogin"></label>
+                        <input type="text" name="email" placeholder="Email " >
+                        <div>
+                            {% with messages = get_flashed_messages(category_filter=["emailLogin"]) %}
+                                {% if messages %}
+                                    {% for message in messages %}
+                                        <p class="text-danger">{{message}}</p>
+                                    {% endfor %}
+                                {% endif %}
+                            {% endwith %}
+                        </div>
+                    </div>
+                    <div class="field">
+                    <label for="name"></label>
+                    <input type="password" name="password" placeholder="Password" >
+                    
+                    <div class="form-row">
+                            {% with messages = get_flashed_messages(category_filter=["passwordLogin"]) %}
+                                {% if messages %}
+                                    {% for message in messages %}
+                                        <p class="text-danger">{{message}}</p>
+                                    {% endfor %}
+                                {% endif %}
+                            {% endwith %}
+                    </div>
+                    </div>
+                    <div class="field btn">
+                        <div class="btn-layer"></div>
+                        <input type="submit" value="Login">
+                    </div>
+                    
+                </form>
+                <form action="/register" method="post" class="signup">
+                    <div class="field">
+                        <input type="text" name="name" placeholder=" First Name" >
+                        <div class="form-row">
+                            {% with messages = get_flashed_messages(category_filter=["name"]) %}
+                                {% if messages %}
+                                    {% for message in messages %}
+                                        <p class="text-danger">{{message}}</p>
+                                    {% endfor %}
+                                {% endif %}
+                            {% endwith %}
+                        </div>
+                    </div>
+                    <div class="field">
+                        <input type="text" name="lastName" placeholder=" Last Name" >
+                        <div class="form-row">
+                            {% with messages = get_flashed_messages(category_filter=["lastName"]) %}
+                                {% if messages %}
+                                    {% for message in messages %}
+                                        <p class="text-danger">{{message}}</p>
+                                    {% endfor %}
+                                {% endif %}
+                            {% endwith %}
+                        </div>
+                    </div>
+                    <div class="field">
+                        <input type="text" name="email" placeholder="Email " >
+                        <div class="form-row">
+                            {% with messages = get_flashed_messages(category_filter=["emailSignUp"]) %}
+                                {% if messages %}
+                                    {% for message in messages %}
+                                        <p class="text-danger">{{message}}</p>
+                                    {% endfor %}
+                                {% endif %}
+                            {% endwith %}
+                        </div>
+                    </div>
+                    <div class="field">
+                        <input type="password" name="password" placeholder="Password" >
+                        <div class="form-row">
+                            {% with messages = get_flashed_messages(category_filter=["passwordRegister"]) %}
+                                {% if messages %}
+                                    {% for message in messages %}
+                                        <p class="text-danger">{{message}}</p>
+                                    {% endfor %}
+                                {% endif %}
+                            {% endwith %}
+                        </div>
+                    </div>
+                    <div class="field">
+                        <input type="password" name="confirmpassword" placeholder="Confirm password" >
+                        <div class="form-row">
+                            {% with messages = get_flashed_messages(category_filter=["passwordConfirm"]) %}
+                                {% if messages %}
+                                    {% for message in messages %}
+                                        <p class="text-danger">{{message}}</p>
+                                    {% endfor %}
+                                {% endif %}
+                            {% endwith %}
+                        </div>
+                    </div>
+                    <div class="field btn">
+                        <div class="btn-layer"></div>
+                        <input type="submit" value="Register">
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+        <script>
+            const loginText = document.querySelector(".title-text .login");
+            const loginForm = document.querySelector("form.login");
+            const loginBtn = document.querySelector("label.login");
+            const signupBtn = document.querySelector("label.signup");
+            const signupLink = document.querySelector("form .signup-link a");
+            signupBtn.onclick = (()=>{
+            loginForm.style.marginLeft = "-50%";
+            loginText.style.marginLeft = "-50%";
+            });
+            loginBtn.onclick = (()=>{
+            loginForm.style.marginLeft = "0%";
+            loginText.style.marginLeft = "0%";
+            });
+            signupLink.onclick = (()=>{
+            signupBtn.click();
+            return false;
+            });
+        </script>
+</body>
+</html>

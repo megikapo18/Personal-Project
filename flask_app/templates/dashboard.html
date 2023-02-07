@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.3.1/dist/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='styledashboard.css') }}">
+
+</head>
+<body>
+    <nav class="p-3 mb-2 d-flex p-2 justify-content-around border-bottom mb-5 shadow-lg p-3 mb-5 bg-body-tertiary rounded">
+        <div class="fw-bolder">
+            <h1 style="color: azure;" >Chore Tracker </h1>
+        </div>
+        <div>
+            <input type="checkbox" id="active">
+            <label for="active" class="menu-btn"><i class="fas fa-bars"></i></label>
+            <div class="wrapper">
+                <ul>
+                    <li><a href="/addjob">Add a Job</a></li>
+                    <li><a href="/logout">Log out</a></li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+    <div class="d-flex justify-content-around">
+        <div>
+            <table class="styled-table">
+                <thead>
+                <tr>
+                    <th>Job</th>
+                    <th>Location</th>
+                    <th>Action</th>
+                </tr>
+                </thead>
+                    <tbody>
+                    {% for job in jobs %}
+                        <tr class="active-row">                      
+                            <td>{{job.title}}</td>
+                            <td>{{job.location}}</td>
+                            <td>
+                                <a  class="text-decoration-none" href="/view/{{job.id}}">View</a>
+                                {% if loginUser.id != job.user_id %}
+                                    {% if job.id not in jobIds %}
+                                <a class="text-decoration-none" href="/add/{{job.id}}">Add to my job</a> 
+                                    {% endif %}
+                                {% endif %}
+                                {% if loginUser.id == job.user_id %}
+                                <a class="text-decoration-none" href="/edit/{{job.id}}">Edit</a> 
+                                <a  class="text-decoration-none"href="/cancel/{{job.id}}">Cancel</a>
+                                {% endif %}
+                            </td>
+                        </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+            </div>
+        <div >
+            <table class="styled-table">
+                    <thead>
+                    <tr>
+                        <th>Jobs created by me</th>
+                    </tr>    
+                    </thead>
+                    {% for job in myjob %}
+                    {% if loginUser.id == job.user_id %}
+                    <tr class="active-row">
+                        <td>{{job.title}}</td>
+                    </tr>
+                    {% endif %}
+                {% endfor %}
+            </table>
+        </div>
+        <div >
+            <table class="styled-table">
+                    <thead>
+                    <tr>
+                        <th>Jobs added by me</th>
+                    </tr>    
+                    </thead>
+                    {% for job in addedJobs %}
+                    {% if loginUser.id == job.user_id %}
+                    <tr class="active-row">
+                        <td>{{job.title}}</td>
+                    </tr>
+                    {% endif %}
+                {% endfor %}
+            </table>
+        </div>
+    </div>
+
+</body>
+</html>
